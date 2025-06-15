@@ -1,7 +1,5 @@
 # 🌿 Health & Wellness Hub
 
-![App Screenshot](https://i.imgur.com/JQ8K3hN.png)
-
 [![Flask](https://img.shields.io/badge/Flask-2.0.1-000000?style=flat&logo=flask)](https://flask.palletsprojects.com/)
 [![Python](https://img.shields.io/badge/Python-3.8+-blue?style=flat&logo=python)](https://www.python.org/)
 [![Scikit-learn](https://img.shields.io/badge/Scikit--learn-1.0-orange?style=flat&logo=scikit-learn)](https://scikit-learn.org/)
