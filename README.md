@@ -25,7 +25,6 @@ git clone https://github.com/yourusername/health-wellness-hub.git
 cd health-wellness-hub/ml
 
 # Install dependencies
-pip install -r requirements.txt
 
 # Launch application
 python app.py
