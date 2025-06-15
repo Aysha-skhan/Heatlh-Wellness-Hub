@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Health & Wellness Hub</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #1E88E5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #333;
+    }
+
+    .main-container {
+      width: 95%;
+      max-width: 1200px;
+      padding: 2rem;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .header img {
+      width: 80px;
+      height: 80px;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      color: white;
+      margin: 1rem 0 0.5rem;
+    }
+
+    .header p {
+      color: rgba(255,255,255,0.9);
+      font-size: 1.1rem;
+      margin: 0;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .option-card {
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      padding: 1.5rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .option-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+    }
+
+    .option-card img {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 1rem;
+    }
+
+    .option-card h2 {
+      font-size: 1.5rem;
+      color: #1E88E5;
+      margin: 0 0 0.5rem;
+    }
+
+    .option-card p {
+      margin: 0 0 1.5rem;
+      line-height: 1.5;
+      flex-grow: 1;
+    }
+
+    .option-card .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #1E88E5;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      text-align: center;
+      transition: background 0.3s ease;
+    }
+
+    .option-card .btn:hover {
+      background-color: #1565C0;
+    }
+
+    @media (max-width: 768px) {
+      .options-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .header h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <div class="header">
+      <img src="https://cdn-icons-png.flaticon.com/128/3058/3058991.png" alt="Health Hub Icon">
+      <h1>Health & Wellness Hub</h1>
+      <p>Your comprehensive guide to better health and lifestyle</p>
+    </div>
+
+    <div class="options-grid">
+      <div class="option-card" onclick="window.location.href='/predictor'">
+        <img src="https://cdn-icons-png.flaticon.com/128/2779/2779775.png" alt="Predictor Icon">
+        <h2>Lifestyle Predictor</h2>
+        <p>Assess your current lifestyle habits and get personalized predictions about your health status based on your daily routines and metrics.</p>
+        <a href="/predictor" class="btn">Try Predictor</a>
+      </div>
+
+      <div class="option-card" onclick="window.open('https://www.myfitnesspal.com/', '_blank')">
+        <img src="https://cdn-icons-png.flaticon.com/128/2936/2936886.png" alt="Tracker Icon">
+        <h2>Health Tracker</h2>
+        <p>Track your daily health metrics including steps, sleep, water intake, and exercise to monitor your progress over time.</p>
+        <a href="https://www.myfitnesspal.com/" target="_blank" class="btn">Start Tracking</a>
+      </div>
+
+      <div class="option-card" onclick="window.open('https://www.healthline.com/nutrition', '_blank')">
+        <img src="https://cdn-icons-png.flaticon.com/128/3480/3480478.png" alt="Plans Icon">
+        <h2>Wellness Plans</h2>
+        <p>Access customized wellness plans including exercise routines, meal plans, and mindfulness exercises tailored to your goals.</p>
+        <a href="https://www.healthline.com/nutrition" target="_blank" class="btn">View Plans</a>
+      </div>
+
+      <div class="option-card" onclick="window.open('https://www.cdc.gov/healthyschools/nutrition/facts.htm', '_blank')">
+        <img src="https://cdn-icons-png.flaticon.com/128/2232/2232688.png" alt="Education Icon">
+        <h2>Health Education</h2>
+        <p>Learn about important health topics, nutrition guides, and wellness strategies through our comprehensive resource library.</p>
+        <a href="https://www.cdc.gov/healthyschools/nutrition/facts.htm" target="_blank" class="btn">Learn More</a>
+      </div>
+
+      <div class="option-card" onclick="window.open('https://www.patientslikeme.com/', '_blank')">
+        <img src="https://cdn-icons-png.flaticon.com/128/2965/2965300.png" alt="Community Icon">
+        <h2>Community</h2>
+        <p>Connect with others on their health journey, share experiences, and get support from our wellness community.</p>
+        <a href="https://www.patientslikeme.com/" target="_blank" class="btn">Join Community</a>
+      </div>
+
+      <div class="option-card" onclick="window.open('https://www.webmd.com/', '_blank')">
+        <img src="https://cdn-icons-png.flaticon.com/128/2784/2784487.png" alt="Experts Icon">
+        <h2>Expert Advice</h2>
+        <p>Get answers to your health questions from certified professionals including nutritionists and fitness trainers.</p>
+        <a href="https://www.webmd.com/" target="_blank" class="btn">Ask Experts</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const cards = document.querySelectorAll('.option-card');
+      cards.forEach((card, index) => {
+        setTimeout(() => {
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        }, 100 * index);
+      });
+    });
+  </script>
+</body>
+</html>
