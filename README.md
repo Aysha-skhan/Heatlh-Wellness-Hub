@@ -17,11 +17,6 @@ A comprehensive wellness application that predicts lifestyle health and connects
 | 📚 **Health Education** | Trusted medical information sources |
 | 👥 **Community** | Connect with others on health journeys |
 
-graph TD
-    A[Homepage] --> B[Lifestyle Predictor]
-    A --> C[Health Tracker]
-    A --> D[Wellness Plans]
-    A --> E[Health Education]
 ## 🛠️ Installation
 
 ```bash
