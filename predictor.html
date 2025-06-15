@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Healthy Lifestyle Predictor</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #1E88E5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .main-container {
+      display: flex;
+      width: 95%;
+      max-width: 1400px;
+      gap: 0; /* No gap between form and image */
+      padding: 1rem;
+      align-items: flex-start;
+    }
+
+    .form-container {
+      flex: 0 0 65%;
+      min-width: 0;
+    }
+
+.image-container {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: stretch;
+  height: 100%; /* Match form height */
+  max-height: 100%; /* Prevent overflow */
+  overflow: hidden;
+  border-radius: 0 16px 16px 0;
+}
+
+.image-container img {
+  width: 100%;
+  height: 785px;
+  object-fit: cover;
+  object-position: center; /* Ensure best part of image is visible */
+  border-radius: 0 16px 16px 0;
+  box-shadow: 8px 0 24px rgba(0, 0, 0, 0.2);
+  margin-left: -1px;
+}
+
+    .card {
+      background-color: #ffffff;
+      border-radius: 16px 0 0 16px; /* Only round left corners */
+      box-shadow: -8px 0 24px rgba(0, 0, 0, 0.2); /* Shadow only on left */
+      padding: 1.5rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      height: 100%; /* Ensure card takes full height */
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .header img {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+    }
+
+    .header h2 {
+      font-size: 1.8rem;
+      color: #1E88E5;
+      margin: 0;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(200px, 1fr));
+      gap: 1rem;
+      width: 100%;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .form-group label {
+      margin-bottom: 6px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    .height-inputs {
+      display: flex;
+      gap: 8px;
+    }
+
+    .height-inputs input {
+      flex: 1;
+      min-width: 0;
+    }
+
+    button {
+      margin-top: 1.5rem;
+      padding: 12px;
+      font-size: 1rem;
+      font-weight: bold;
+      color: white;
+      background-color: #1E88E5;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #1565C0;
+    }
+
+    .result {
+      margin-top: 1.5rem;
+      font-size: 1.1rem;
+      text-align: center;
+      color: #1E88E5;
+    }
+
+    @media (max-width: 900px) {
+      .main-container {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .image-container {
+        display: none;
+      }
+      .form-container {
+        flex: 1;
+        padding-right: 0;
+        width: 100%;
+      }
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      .card {
+        padding: 1.25rem;
+        border-radius: 16px; /* Restore full rounding on mobile */
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); /* Restore full shadow on mobile */
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <div class="form-container">
+      <div class="card">
+        <div class="header">
+          <img src="https://cdn-icons-png.flaticon.com/128/6774/6774898.png" alt="Health Icon" />
+          <h2>Healthy Lifestyle Predictor</h2>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="gender">Gender</label>
+            <select id="gender" required>
+              <option value="" disabled selected>Select gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="occupation">Occupation</label>
+            <select id="occupation" onchange="toggleOccupationInput()" required>
+              <option value="" disabled selected>Select occupation</option>
+              <option value="Student">Student</option>
+              <option value="Engineer">Engineer</option>
+              <option value="Healthcare">Healthcare</option>
+              <option value="Teacher">Teacher</option>
+              <option value="Sales Representative">Sales Representative</option>
+              <option value="Software Engineer">Software Engineer</option>
+              <option value="Doctor">Doctor</option>
+              <option value="Other">Other</option>
+            </select>
+            <input
+              id="occupation_other"
+              type="text"
+              placeholder="Enter your occupation"
+              style="display:none; margin-top: 8px;"
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="age">Age</label>
+            <input id="age" type="number" min="0" max="120" placeholder="Age in years" required />
+          </div>
+
+          <div class="form-group">
+            <label for="height">Height</label>
+            <div class="height-inputs">
+              <input id="height_feet" type="number" min="3" max="8" placeholder="Feet" required />
+              <input id="height_inches" type="number" min="0" max="11" placeholder="Inches" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="weight">Weight (kg)</label>
+            <input id="weight" type="number" step="0.1" min="30" max="300" placeholder="Weight in kg" required />
+          </div>
+
+          <div class="form-group">
+            <label for="sleep_duration">Sleep Duration (hrs)</label>
+            <input
+              id="sleep_duration"
+              type="number"
+              step="0.1"
+              min="0"
+              max="24"
+              placeholder="e.g., 7.5"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="quality_sleep">Quality of Sleep (1-10)</label>
+            <input
+              id="quality_sleep"
+              type="number"
+              min="1"
+              max="10"
+              placeholder="1 (Poor) to 10 (Excellent)"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="physical_activity">Physical Activity (minutes/week)</label>
+            <input
+              id="physical_activity"
+              type="number"
+              min="0"
+              placeholder="e.g., 150"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="stress_level">Stress Level (1-10)</label>
+            <input
+              id="stress_level"
+              type="number"
+              min="1"
+              max="10"
+              placeholder="1 (Low) to 10 (High)"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="systolic">Systolic BP</label>
+            <select id="systolic" onchange="toggleCustomInput(this, 'systolic_custom')" required>
+              <option value="" disabled selected>Select range</option>
+              <option value="Low">Low (&lt;90)</option>
+              <option value="Normal">Normal (90-120)</option>
+              <option value="High">High (&gt;120)</option>
+              <option value="Custom">Custom</option>
+            </select>
+            <input
+              id="systolic_custom"
+              type="number"
+              min="60"
+              max="200"
+              placeholder="Enter custom systolic"
+              style="display:none; margin-top: 8px;"
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="diastolic">Diastolic BP</label>
+            <select id="diastolic" onchange="toggleCustomInput(this, 'diastolic_custom')" required>
+              <option value="" disabled selected>Select range</option>
+              <option value="Low">Low (&lt;60)</option>
+              <option value="Normal">Normal (60-80)</option>
+              <option value="High">High (&gt;80)</option>
+              <option value="Custom">Custom</option>
+            </select>
+            <input
+              id="diastolic_custom"
+              type="number"
+              min="40"
+              max="120"
+              placeholder="Enter custom diastolic"
+              style="display:none; margin-top: 8px;"
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="heart_rate">Heart Rate (bpm)</label>
+            <select id="heart_rate" onchange="toggleCustomInput(this, 'heart_rate_custom')" required>
+              <option value="" disabled selected>Select range</option>
+              <option value="Low">Low (&lt;60)</option>
+              <option value="Normal">Normal (60-80)</option>
+              <option value="High">High (&gt;80)</option>
+              <option value="Custom">Custom</option>
+            </select>
+            <input
+              id="heart_rate_custom"
+              type="number"
+              min="40"
+              max="200"
+              placeholder="Enter custom heart rate"
+              style="display:none; margin-top: 8px;"
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="form-group" style="grid-column: span 2;">
+            <label for="daily_steps">Daily Steps</label>
+            <input
+              id="daily_steps"
+              type="number"
+              min="0"
+              placeholder="e.g., 5000"
+              required
+            />
+          </div>
+        </div>
+
+        <button onclick="predict()">Predict</button>
+
+        <div id="result" class="result"></div>
+      </div>
+    </div>
+    
+    <div class="image-container">
+      <img src="https://i.pinimg.com/736x/a0/c1/47/a0c147bc23526b2ad8acfda852840563.jpg" alt="Healthy Lifestyle">
+    </div>
+  </div>
+
+  <script>
+    function toggleCustomInput(selectElement, inputId) {
+      const inputField = document.getElementById(inputId);
+      if (selectElement.value === "Custom") {
+        inputField.style.display = "inline-block";
+      } else {
+        inputField.style.display = "none";
+        inputField.value = "";
+      }
+    }
+
+    function toggleOccupationInput() {
+      const occupationSelect = document.getElementById("occupation");
+      const otherInput = document.getElementById("occupation_other");
+      if (occupationSelect.value === "Other") {
+        otherInput.style.display = "block";
+        otherInput.required = true;
+      } else {
+        otherInput.style.display = "none";
+        otherInput.value = "";
+        otherInput.required = false;
+      }
+    }
+
+    function convertToCm(feet, inches) {
+      return Math.round((feet * 12 + inches) * 2.54);
+    }
+
+    async function predict() {
+      // Collect inputs
+      const gender = document.getElementById("gender").value.trim();
+      let occupation = document.getElementById("occupation").value.trim();
+      const occupationOther = document.getElementById("occupation_other").value.trim();
+
+      if (occupation === "Other") {
+        if (occupationOther === "") {
+          alert("Please enter your occupation in the 'Other' field.");
+          return;
+        }
+        occupation = occupationOther;
+      }
+
+      const age = parseInt(document.getElementById("age").value.trim()) || 0;
+      const feet = parseInt(document.getElementById("height_feet").value.trim()) || 0;
+      const inches = parseInt(document.getElementById("height_inches").value.trim()) || 0;
+      const height_cm = convertToCm(feet, inches);
+      const weight = parseFloat(document.getElementById("weight").value.trim()) || 0;
+      const sleep_duration = parseFloat(document.getElementById("sleep_duration").value.trim()) || 0;
+      const quality_sleep = parseInt(document.getElementById("quality_sleep").value.trim()) || 5;
+      const physical_activity = parseInt(document.getElementById("physical_activity").value.trim()) || 0;
+      const stress_level = parseInt(document.getElementById("stress_level").value.trim()) || 5;
+      const daily_steps = parseInt(document.getElementById("daily_steps").value.trim()) || 0;
+
+      // Helper function to convert selection to value
+      function mapRange(selectId, customId, map) {
+        const val = document.getElementById(selectId).value;
+        if (val === "Custom") {
+          return parseInt(document.getElementById(customId).value.trim()) || map["Normal"];
+        }
+        return map[val] || map["Normal"];
+      }
+
+      // Mapping ranges to representative values
+      const systolic = mapRange("systolic", "systolic_custom", {
+        Low: 90,
+        Normal: 115,
+        High: 140
+      });
+
+      const diastolic = mapRange("diastolic", "diastolic_custom", {
+        Low: 60,
+        Normal: 75,
+        High: 90
+      });
+
+      const heart_rate = mapRange("heart_rate", "heart_rate_custom", {
+        Low: 55,
+        Normal: 72,
+        High: 95
+      });
+
+      if (!gender || !occupation) {
+        alert("Please select gender and occupation.");
+        return;
+      }
+
+      document.getElementById("result").innerText = "Predicting...";
+
+      try {
+        const response = await fetch("http://127.0.0.1:5000/predict", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            gender: gender === "Female" ? "Female" : "Male",
+            age: age,
+            occupation: occupation,
+            sleep_duration: sleep_duration,
+            quality_sleep: quality_sleep,
+            physical_activity: physical_activity,
+            stress_level: stress_level,
+            systolic: systolic,
+            diastolic: diastolic,
+            heart_rate: heart_rate,
+            daily_steps: daily_steps
+          }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          // Convert numeric prediction to meaningful label
+          const predictionLabel = data.prediction === 1 ? "Healthy" : "Unhealthy";
+          document.getElementById("result").innerText = "Prediction: " + predictionLabel;
+
+          if (predictionLabel === "Unhealthy") {
+            const userData = {
+              gender,
+              age,
+              occupation,
+              height: `${feet}'${inches}" (${height_cm}cm)`,
+              weight,
+              sleep_duration,
+              quality_sleep,
+              physical_activity,
+              stress_level,
+              systolic,
+              diastolic,
+              heart_rate,
+              daily_steps
+            };
+
+            const planWindow = window.open("", "_blank", "width=700,height=700");
+
+            const planHTML = `
+              <!DOCTYPE html>
+              <html lang="en">
+              <head>
+                <title>Custom Healthy Lifestyle Plan</title>
+                <style>
+                  body {
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    margin: 20px;
+                    background: #f0f7ff;
+                    color: #1E88E5;
+                  }
+                  h1 {
+                    text-align: center;
+                    margin-bottom: 20px;
+                  }
+                  .plan {
+                    background: white;
+                    border-radius: 12px;
+                    padding: 20px;
+                    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+                    max-width: 650px;
+                    margin: auto;
+                    line-height: 1.5;
+                  }
+                  button {
+                    margin-top: 20px;
+                    display: block;
+                    font-weight: bold;
+                    background-color: #1E88E5;
+                    color: white;
+                    border: none;
+                    padding: 12px 20px;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease;
+                  }
+                  button:hover {
+                    background-color: #1565C0;
+                  }
+                </style>
+              </head>
+              <body>
+                <h1>Custom Healthy Lifestyle Plan</h1>
+                <div class="plan">
+                  <p><strong>Gender:</strong> ${userData.gender}</p>
+                  <p><strong>Age:</strong> ${userData.age}</p>
+                  <p><strong>Occupation:</strong> ${userData.occupation}</p>
+                  <p><strong>Height:</strong> ${userData.height}</p>
+                  <p><strong>Weight:</strong> ${userData.weight} kg</p>
+                  <p><strong>Sleep Duration:</strong> ${userData.sleep_duration} hrs</p>
+                  <p><strong>Quality of Sleep:</strong> ${userData.quality_sleep} / 10</p>
+                  <p><strong>Physical Activity:</strong> ${userData.physical_activity} mins/week</p>
+                  <p><strong>Stress Level:</strong> ${userData.stress_level} / 10</p>
+                  <p><strong>Blood Pressure:</strong> ${userData.systolic} / ${userData.diastolic} mmHg</p>
+                  <p><strong>Heart Rate:</strong> ${userData.heart_rate} bpm</p>
+                  <p><strong>Daily Steps:</strong> ${userData.daily_steps}</p>
+                  <hr />
+                  <h3>Recommendations:</h3>
+                  <ul>
+                    <li>Maintain regular physical activity: aim for at least 150 mins/week moderate intensity.</li>
+                    <li>Improve sleep quality and ensure 7-8 hours of restful sleep per night.</li>
+                    <li>Manage stress through mindfulness, meditation, or hobbies.</li>
+                    <li>Monitor and control blood pressure and heart rate with lifestyle changes and medical advice.</li>
+                    <li>Increase daily steps to 10,000 or more for overall cardiovascular health.</li>
+                    <li>Maintain a balanced diet rich in fruits, vegetables, and whole grains.</li>
+                    <li>Regular health check-ups with your healthcare provider.</li>
+                  </ul>
+                </div>
+                <button onclick="window.close()">Close</button>
+              </body>
+              </html>
+            `;
+
+            planWindow.document.write(planHTML);
+            planWindow.document.close();
+          }
+        } else {
+          document.getElementById("result").innerText = "Prediction failed: " + (data.error || "Unknown error");
+        }
+      } catch (error) {
+        document.getElementById("result").innerText = "Error connecting to server: " + error.message;
+      }
+    }
+  </script>
+</body>
+</html>
