@@ -28,4 +28,4 @@ cd health-wellness-hub/ml
 pip install -r requirements.txt
 
 # Launch application
-python app1.py
+python app.py
